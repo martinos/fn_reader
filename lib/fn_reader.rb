@@ -2,6 +2,14 @@ require "fn_reader/version"
 
 module FnReader
   class NameError < StandardError; end
+
+  def self.context(*modules, &caller)
+    extended = Object.new
+    modules.each do |a|
+      extended.extend a
+    end
+    extended.instance_eval(&caller)
+  end
 end
 
 class Module
